@@ -1,6 +1,6 @@
 Wayfire Archlinux PKGBUILD Collection
 =====================
-This is my custom PKGBUILD collection to build wayfire from git. There're some problems with wayfire git group on AUR, such as missing make dependecies, outdated subprojects and the inconsistent indentation. Another major problem is that I have installed some plugins not owned by wayfire-plugins-extra-git and I have to re-compile them after all packages installed. That's why I have to create the repo.
+This is my custom PKGBUILD collection to build wayfire from git. There're some problems with wayfire git group on AUR, such as missing make dependecies, outdated subprojects and the inconsistent indentation. Another major problem is that I have installed some plugins not owned to wayfire-plugins-extra-git and I have to re-compile them after all packages installed. That's why I have to create the repo.
 
 Provides
 ---------------------
