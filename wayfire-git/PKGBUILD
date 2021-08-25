@@ -1,0 +1,42 @@
+# Maintainer: Solomon Choina <shlomochoina@gmail.com0
+pkgname=wayfire-git
+pkgver=0.8.0r2113.931f7620
+pkgrel=1
+pkgdesc="3D wayland compositor"
+arch=('x86_64')
+url="https://github.com/ammen99/wayfire"
+license=('MIT')
+depends=('wlroots-git' 'cairo' 'glm' 'libjpeg' 'wf-config-git' 'seatd')
+makedepends=('git' 'meson' 'ninja' 'wayland-protocols' 'doctest' 'cmake')
+optdepends=('wf-shell-git: GTK3-based panel for the Wayfire compositor'
+            'wf-sound-control-git: Small utility for the Wayfire compositor to control sound volume')
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+replaces=()
+options=()
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire")
+sha256sums=('SKIP')
+
+pkgver () {
+    cd "${srcdir}/${pkgname}"
+    (
+        set -o pipefail
+        version=$(grep -oP "^\sversion:\s'\K[^']*" meson.build)
+        printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    )
+}
+
+build() {
+    arch-meson \
+        -Duse_system_wlroots=enabled \
+        -Duse_system_wfconfig=enabled \
+        "${srcdir}/${pkgname}/" \
+        build
+    ninja -C build
+}
+
+
+package() {
+    DESTDIR="${pkgdir}/" ninja -C build install
+    install -m644 "${srcdir}/${pkgname}/wayfire.ini" "${pkgdir}/usr/share"
+}

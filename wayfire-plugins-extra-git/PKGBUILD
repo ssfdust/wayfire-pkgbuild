@@ -1,0 +1,45 @@
+# Maintainer: Librewish <librewish@gmail.com>
+
+pkgname=wayfire-plugins-extra-git
+pkgver=0.8.0r132.cc6788f
+pkgrel=1
+pkgdesc="3D wayland compositor extra plugins"
+arch=('any')
+url="https://github.com/WayfireWM/wayfire-plugins-extra"
+license=('MIT')
+depends=('wayfire-git' 'glibmm' 'iio-sensor-proxy')
+makedepends=('git' 'meson' 'ninja')
+optdepends=('wcm: GTK3-based configuration tool for the Wayfire compositor')
+provides=("${pkgname}" "wayfire-plugins-extra")
+conflicts=("wayfire-plugins-extra")
+replaces=()
+options=()
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire-plugins-extra" "wayfire-plugins-extra-git.patch")
+sha256sums=('SKIP' '33a9adfbb31457b9d4848511ac6710fb31d97d052e0c5acd8aa6898355f9d068')
+install=wayfire-plugins-extra.install
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    git submodule update --init --recursive
+    git submodule add https://github.com/DankBSD/wf-wallpaper.git subprojects/wf-wallpaper
+    patch -s -p1 < "${srcdir}/wayfire-plugins-extra-git.patch"
+}
+
+pkgver () {
+    cd "${srcdir}/${pkgname%}"
+    (
+        set -o pipefail
+        version=$(grep -oP "^\sversion:\s'\K[^']*" meson.build)
+        printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    )
+}
+
+build() {
+    arch-meson -Denable_dbus=true -Denable_windecor=true -Denable_wayfire_shadows=true -Denable_wf_wallpaper=true "${srcdir}/${pkgname}/" build 
+    ninja -C build
+}
+
+
+package() {
+    DESTDIR="${pkgdir}/" ninja -C build install
+}

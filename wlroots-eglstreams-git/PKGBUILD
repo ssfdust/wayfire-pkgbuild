@@ -1,0 +1,70 @@
+# Maintainer: Danilo Bargen <aur ät dbrgn döt ch>
+# Forked from wlroots-git PKGBUILD in early May 2021
+pkgname=wlroots-eglstreams-git
+pkgver=0.15.0r5004.58845d0a
+pkgrel=1
+license=(custom:MIT)
+pkgdesc='Modular Wayland compositor library with EGLStream support (git version)'
+url=https://github.com/danvd/wlroots-eglstreams
+arch=(x86_64)
+provides=("wlroots=${pkgver%%.r*}" wlroots-git)
+conflicts=(wlroots wlroots-git)
+options=(debug)
+depends=(
+    libinput
+    libxcb
+    libxkbcommon
+    opengl-driver
+    pixman
+    wayland
+    xcb-util-errors
+    xcb-util-renderutil
+    xcb-util-wm
+    seatd
+    systemd
+    xorg-xwayland)
+makedepends=(
+    git
+    meson
+    wayland-protocols
+    xorgproto
+)
+source=("${pkgname}::git+${url}" "wlroots-eglstreams.patch")
+sha512sums=('SKIP' 'SKIP')
+
+pkgver () {
+    cd "${pkgname}"
+    (
+        set -o pipefail
+        version=$(grep -oP "^\sversion:\s'\K[^']*" meson.build)
+        printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    )
+}
+
+prepare () {
+    cd "${pkgname}"
+    patch -p1 < "${srcdir}/wlroots-eglstreams.patch"
+}
+
+build () {
+    arch-meson \
+        --buildtype=debug \
+        -Dlogind-provider=systemd \
+        -Dlibseat=enabled \
+        -Dwerror=false \
+        -Dexamples=false \
+        -Denable_windecor=true \
+        -Denable_wayfire_shadows=true \
+        "${pkgname}" build
+    meson compile -C build
+}
+
+package () {
+    DESTDIR="${pkgdir}" meson install -C build
+    install -Dm644 "${pkgname}/"LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
+post_upgrade() {
+  echo "Make sure to upgrade wlroots-eglstream-git and sway-git together."
+  echo "Upgrading one but not the other is unsupported."
+}
