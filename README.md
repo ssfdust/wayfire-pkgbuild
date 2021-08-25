@@ -12,6 +12,7 @@ Provides
 * wayfire-plugins-extra
     * dbus-plugin
     * windeco
+    * wayfire-shadows
     * [wf-wallpaper](https://github.com/DankBSD/wf-wallpaper)
 * [wlroots-eglstream](https://github.com/danvd/wlroots-eglstreams) (for nvidia, xwayland doesn't work, all broswers are broken)
 
