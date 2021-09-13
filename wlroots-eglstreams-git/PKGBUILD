@@ -36,7 +36,7 @@ pkgver () {
     cd "${pkgname}"
     (
         set -o pipefail
-        version=$(grep -oP "^\sversion:\s'\K[^']*" meson.build)
+        version=$(grep -zoP "project\([^)]*\)" meson.build | xargs --null echo | grep -oP "^\sversion:\s'\K[^']*")
         printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
     )
 }
