@@ -1,7 +1,7 @@
 # Maintainer: Librewish <librewish@gmail.com>
 
 pkgname=wayfire-plugins-extra-git
-pkgver=0.8.0r132.cc6788f
+pkgver=0.8.0r134.6258516
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
 arch=('any')
@@ -14,15 +14,16 @@ provides=("${pkgname}" "wayfire-plugins-extra")
 conflicts=("wayfire-plugins-extra")
 replaces=()
 options=()
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire-plugins-extra" "wayfire-plugins-extra-git.patch")
-sha256sums=('SKIP' '33a9adfbb31457b9d4848511ac6710fb31d97d052e0c5acd8aa6898355f9d068')
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire-plugins-extra" "wayfire-plugins-extra-git.patch" "./wayfire-plugins-extra-dbus-git.patch")
+sha256sums=('SKIP' '7fd858f2dd3adfb25d1b3cad120953e8ab022084b46b30554f7d89f2df6bd700' '369f98079cd751e17a557f9b6434a898f00c6429cd55e72f94f74b3f253a84fe')
 install=wayfire-plugins-extra.install
 
 prepare() {
     cd "${srcdir}/${pkgname}"
     git submodule update --init --recursive
-    git submodule add https://github.com/DankBSD/wf-wallpaper.git subprojects/wf-wallpaper
+    git submodule add https://github.com/ssfdust/wf-wallpaper.git subprojects/wf-wallpaper
     patch -s -p1 < "${srcdir}/wayfire-plugins-extra-git.patch"
+    patch -s -p1 < "${srcdir}/wayfire-plugins-extra-dbus-git.patch"
 }
 
 pkgver () {

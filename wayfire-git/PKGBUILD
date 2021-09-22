@@ -1,6 +1,6 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.8.0r2118.e83f1f6f
+pkgver=0.8.0r2122.6f974c38
 pkgrel=1
 pkgdesc="3D wayland compositor"
 arch=('x86_64')
@@ -14,8 +14,10 @@ provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}")
 replaces=()
 options=()
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire")
-sha256sums=('SKIP')
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire"
+        "wayfire.patch")
+sha256sums=('SKIP'
+            'SKIP')
 
 pkgver () {
     cd "${srcdir}/${pkgname}"
@@ -24,6 +26,11 @@ pkgver () {
         version=$(grep -zoP "project\([^)]*\)" meson.build | xargs --null echo | grep -oP "^\sversion:\s'\K[^']*")
         printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
     )
+}
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    patch -p1 < "${srcdir}/wayfire.patch"
 }
 
 build() {
