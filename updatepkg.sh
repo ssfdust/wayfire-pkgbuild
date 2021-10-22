@@ -7,6 +7,10 @@ else
     dirlist=(wlroots-git wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
 fi
 
+if [ "$1" != "" ];then
+    dirlist=("$1")
+fi
+
 for dir in ${dirlist[@]}
 do
     pushd "${dir}" > /dev/null

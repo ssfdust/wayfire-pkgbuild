@@ -1,7 +1,7 @@
 # Maintainer: Librewish <librewish@gmail.com>
 
 pkgname=wayfire-plugins-extra-git
-pkgver=0.8.0r134.6258516
+pkgver=0.8.0r136.33acb2d
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
 arch=('any')
@@ -14,17 +14,9 @@ provides=("${pkgname}" "wayfire-plugins-extra")
 conflicts=("wayfire-plugins-extra")
 replaces=()
 options=()
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire-plugins-extra" "wayfire-plugins-extra-git.patch" "./wayfire-plugins-extra-dbus-git.patch")
-sha256sums=('SKIP' '7fd858f2dd3adfb25d1b3cad120953e8ab022084b46b30554f7d89f2df6bd700' '369f98079cd751e17a557f9b6434a898f00c6429cd55e72f94f74b3f253a84fe')
+source=("${pkgname}::git+https://github.com/ssfdust/wayfire-plugins-extra#branch=arch")
+sha256sums=('SKIP')
 install=wayfire-plugins-extra.install
-
-prepare() {
-    cd "${srcdir}/${pkgname}"
-    git submodule update --init --recursive
-    git submodule add https://github.com/ssfdust/wf-wallpaper.git subprojects/wf-wallpaper
-    patch -s -p1 < "${srcdir}/wayfire-plugins-extra-git.patch"
-    patch -s -p1 < "${srcdir}/wayfire-plugins-extra-dbus-git.patch"
-}
 
 pkgver () {
     cd "${srcdir}/${pkgname%}"
@@ -36,7 +28,7 @@ pkgver () {
 }
 
 build() {
-    arch-meson -Denable_dbus=true -Denable_windecor=true -Denable_wayfire_shadows=true -Denable_wf_wallpaper=true "${srcdir}/${pkgname}/" build 
+    arch-meson -Denable_dbus=false -Denable_windecor=true -Denable_wayfire_shadows=false -Denable_wf_wallpaper=true "${srcdir}/${pkgname}/" build 
     ninja -C build
 }
 
