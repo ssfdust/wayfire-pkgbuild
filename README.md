@@ -48,5 +48,5 @@ Installation
 #### Example
 
 ```bash
-./updatepkg.sh wayfire-plugins-git
+./updatepkg.sh wayfire-plugins-extra-git
 ```
