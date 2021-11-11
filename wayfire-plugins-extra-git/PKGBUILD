@@ -1,7 +1,7 @@
 # Maintainer: Librewish <librewish@gmail.com>
 
 pkgname=wayfire-plugins-extra-git
-pkgver=0.8.0r136.33acb2d
+pkgver=0.8.0r137.e75ce84
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
 arch=('any')
@@ -28,7 +28,7 @@ pkgver () {
 }
 
 build() {
-    arch-meson -Denable_dbus=false -Denable_windecor=true -Denable_wayfire_shadows=false -Denable_wf_wallpaper=true "${srcdir}/${pkgname}/" build 
+    arch-meson -Denable_dbus=false -Denable_windecor=true -Denable_wayfire_shadows=true -Denable_wf_wallpaper=true "${srcdir}/${pkgname}/" build 
     ninja -C build
 }
 
