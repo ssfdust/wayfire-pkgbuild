@@ -2,7 +2,7 @@
 set -e
 
 if [ -n "$(lsmod | grep nvidia_drm)" ];then
-    dirlist=(wlroots-eglstreams-git wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
+    dirlist=(wlroots-noassert-git wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
 else
     dirlist=(wlroots-git wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
 fi

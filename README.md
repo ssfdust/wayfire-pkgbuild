@@ -11,12 +11,12 @@ Provides
 * wf-config
 * wcm
 * wf-shell
-* wayfire-plugins-extra
+* [wayfire plugins extra](https://)
     * dbus-plugin
     * windeco
     * wayfire-shadows
     * [wf-wallpaper](https://github.com/DankBSD/wf-wallpaper)
-* [wlroots-eglstream](https://github.com/danvd/wlroots-eglstreams) (for nvidia, xwayland doesn't work, all browsers are broken)
+* [wlroots-noassert-git](https://github.com/danvd/wlroots-eglstreams) (for nvidia)
 
 ### custom wayfire-plugins-extra
 
