@@ -1,0 +1,13 @@
+diff --git a/render/wlr_renderer.c b/render/wlr_renderer.c
+index 8a1f1e94..2b2c99f3 100644
+--- a/render/wlr_renderer.c
++++ b/render/wlr_renderer.c
+@@ -227,7 +227,7 @@ bool wlr_renderer_init_wl_display(struct wlr_renderer *r,
+ 			wl_display_add_shm_format(wl_display, fmt);
+ 		}
+ 	}
+-	assert(argb8888 && xrgb8888);
++	// assert(argb8888 && xrgb8888);
+ 
+ 	if (wlr_renderer_get_dmabuf_texture_formats(r) != NULL) {
+ 		if (wlr_renderer_get_drm_fd(r) >= 0) {
