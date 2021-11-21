@@ -1,0 +1,136 @@
+diff --git a/src/api/wayfire/core.hpp b/src/api/wayfire/core.hpp
+index a35d14e7..2fdb9508 100644
+--- a/src/api/wayfire/core.hpp
++++ b/src/api/wayfire/core.hpp
+@@ -121,6 +121,8 @@ class compositor_core_t : public wf::object_base_t
+         wlr_xdg_foreign_registry *foreign_registry;
+         wlr_xdg_foreign_v1 *foreign_v1;
+         wlr_xdg_foreign_v2 *foreign_v2;
++
++        wlr_keyboard_shortcuts_inhibit_manager_v1 *keyboard_inhibit;
+     } protocols;
+ 
+     std::string to_string() const
+diff --git a/src/api/wayfire/nonstd/wlroots.hpp b/src/api/wayfire/nonstd/wlroots.hpp
+index 30e73674..a32a5ad0 100644
+--- a/src/api/wayfire/nonstd/wlroots.hpp
++++ b/src/api/wayfire/nonstd/wlroots.hpp
+@@ -44,12 +44,15 @@ extern "C"
+     struct wlr_surface;
+     struct wlr_texture;
+     struct wlr_viewporter;
++    struct wlr_keyboard_shortcuts_inhibit_manager_v1;
++    struct wlr_keyboard_shortcuts_inhibitor_v1;
+ 
+ #include <wlr/types/wlr_input_device.h>
+ #include <wlr/types/wlr_pointer.h>
+ #include <wlr/types/wlr_keyboard.h>
+ #include <wlr/types/wlr_touch.h>
+ #include <wlr/types/wlr_output.h>
++#include <wlr/types/wlr_keyboard_shortcuts_inhibit_v1.h>
+ #include <wlr/util/box.h>
+ #include <wlr/util/edges.h>
+ #include <wayland-server.h>
+diff --git a/src/api/wayfire/view.hpp b/src/api/wayfire/view.hpp
+index f30f82cf..2c2b69e1 100644
+--- a/src/api/wayfire/view.hpp
++++ b/src/api/wayfire/view.hpp
+@@ -469,6 +469,8 @@ class view_interface_t : public surface_interface_t
+      */
+     uint64_t last_focus_timestamp = 0;
+ 
++    struct wlr_keyboard_shortcuts_inhibitor_v1* keyboard_inhibit = nullptr;
++
+   protected:
+     view_interface_t();
+ 
+diff --git a/src/core/core-impl.hpp b/src/core/core-impl.hpp
+index ff9bb4f8..4cc29a9b 100644
+--- a/src/core/core-impl.hpp
++++ b/src/core/core-impl.hpp
+@@ -112,6 +112,7 @@ class compositor_core_impl_t : public compositor_core_t
+     wf::wl_listener_wrapper input_inhibit_deactivated;
+     wf::wl_listener_wrapper pointer_constraint_added;
+     wf::wl_listener_wrapper idle_inhibitor_created;
++    wf::wl_listener_wrapper keyboard_inhibit_new;
+ 
+     wf::output_t *active_output = nullptr;
+     std::vector<std::unique_ptr<wf::view_interface_t>> views;
+diff --git a/src/core/core.cpp b/src/core/core.cpp
+index 6c866320..af09db9f 100644
+--- a/src/core/core.cpp
++++ b/src/core/core.cpp
+@@ -171,6 +171,25 @@ struct wlr_idle_inhibitor_t : public wf::idle_inhibitor_t
+     }
+ };
+ 
++struct wlr_keyboard_inhibitor
++{
++    wf::wl_listener_wrapper on_destroy;
++    wlr_keyboard_inhibitor(wlr_keyboard_shortcuts_inhibitor_v1 *inhibitor)
++    {
++        on_destroy.set_callback([=] (void*)
++        {
++            auto view = (wf::view_interface_t*)(inhibitor->data);
++            if (view)
++            {
++                view->keyboard_inhibit = nullptr;
++                on_destroy.disconnect();
++            }
++            delete this;
++        });
++        on_destroy.connect(&inhibitor->events.destroy);
++    }
++};
++
+ void wf::compositor_core_impl_t::init()
+ {
+     wlr_renderer_init_wl_display(renderer, display);
+@@ -301,6 +320,21 @@ void wf::compositor_core_impl_t::init()
+     protocols.foreign_v2 = wlr_xdg_foreign_v2_create(display,
+         protocols.foreign_registry);
+ 
++    protocols.keyboard_inhibit = wlr_keyboard_shortcuts_inhibit_v1_create(display);
++    keyboard_inhibit_new.set_callback([&] (void *data)
++    {
++        auto inhibitor = (struct wlr_keyboard_shortcuts_inhibitor_v1*)data;
++        auto& keyboard_focus = wf::get_core_impl().seat->keyboard_focus;
++        if (keyboard_focus && (keyboard_focus->priv->wsurface == inhibitor->surface))
++        {
++            keyboard_focus->keyboard_inhibit = inhibitor;
++            wlr_keyboard_shortcuts_inhibitor_v1_activate(inhibitor);
++            inhibitor->data = keyboard_focus.get();
++            new wlr_keyboard_inhibitor(inhibitor);
++        }
++    });
++    keyboard_inhibit_new.connect(&protocols.keyboard_inhibit->events.new_inhibitor);
++
+     wf_shell  = wayfire_shell_create(display);
+     gtk_shell = wf_gtk_shell_create(display);
+ 
+diff --git a/src/core/seat/keyboard.cpp b/src/core/seat/keyboard.cpp
+index 0de03074..92cdd9a4 100644
+--- a/src/core/seat/keyboard.cpp
++++ b/src/core/seat/keyboard.cpp
+@@ -276,6 +276,12 @@ bool wf::keyboard_t::handle_keyboard_key(uint32_t key, uint32_t state)
+ 
+     input->locked_mods = this->get_locked_mods();
+ 
++    auto view = seat->keyboard_focus.get();
++    if (view && view->keyboard_inhibit && view->keyboard_inhibit->active)
++    {
++        return false;
++    }
++
+     if (state == WLR_KEY_PRESSED)
+     {
+         auto session = wlr_backend_get_session(wf::get_core().backend);
+@@ -320,7 +326,7 @@ bool wf::keyboard_t::handle_keyboard_key(uint32_t key, uint32_t state)
+         mod_binding_key = 0;
+     }
+ 
+-    auto iv = interactive_view_from_view(seat->keyboard_focus.get());
++    auto iv = interactive_view_from_view(view);
+     if (iv && !handled_in_plugin)
+     {
+         iv->handle_key(key, state);
