@@ -5,7 +5,7 @@ pkgver=0.15.0r5182.0855cdac
 pkgrel=1
 license=(custom:MIT)
 pkgdesc='Modular Wayland compositor library (git version)'
-url=https://github.com/swaywm/wlroots
+url=https://gitlab.freedesktop.org/wlroots/wlroots
 arch=(x86_64)
 provides=("libwlroots.so" "wlroots=${pkgver%%.r*}")
 conflicts=(wlroots)
@@ -30,7 +30,7 @@ makedepends=(
 	wayland-protocols
     vulkan-headers
 	xorgproto)
-source=("${pkgname}::git+${url}")
+source=("${pkgname}::git+${url}#commit=fdf3169b4185dad34b01b62762a0218f1412897f")
 sha512sums=('SKIP')
 
 pkgver () {

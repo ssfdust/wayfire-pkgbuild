@@ -1,0 +1,31 @@
+Submodule subprojects/windecor contains modified content
+diff --git a/subprojects/windecor/deco-subsurface.cpp b/subprojects/windecor/deco-subsurface.cpp
+index 564c1b7..a8c1533 100644
+--- a/subprojects/windecor/deco-subsurface.cpp
++++ b/subprojects/windecor/deco-subsurface.cpp
+@@ -24,12 +24,12 @@ class simple_decoration_surface : public wf::surface_interface_t, public wf::com
+     bool _mapped = true;
+ 
+     wayfire_view view;
+-    wf::signal_callback_t title_set = [=] ( wf::signal_data_t *data ) {
++    wf::signal_connection_t title_set = [=] ( wf::signal_data_t *data ) {
+         if ( get_signaled_view( data ) == view )
+             view->damage(); // trigger re-render
+     };
+ 
+-    wf::signal_callback_t sticky_set = [=] ( wf::signal_data_t *data ) {
++    wf::signal_connection_t sticky_set = [=] ( wf::signal_data_t *data ) {
+         if ( get_signaled_view( data ) == view ) {
+             theme.is_sticky = view->sticky;
+             for( auto &renderable: layout.get_renderable_areas() ) {
+@@ -87,8 +87,8 @@ class simple_decoration_surface : public wf::surface_interface_t, public wf::com
+ 
+     virtual ~simple_decoration_surface() {
+ 
+-        view->disconnect_signal( "title-changed", &title_set );
+-        view->disconnect_signal( "set-sticky", &sticky_set );
++        view->disconnect_signal(&title_set );
++        view->disconnect_signal(&sticky_set );
+     }
+ 
+     /* wf::surface_interface_t implementation */
