@@ -29,6 +29,7 @@ pkgver () {
 
 prepare () {
     cd "${srcdir}/${pkgname}"
+    patch -p1 -i "${srcdir}/mag.patch"
     git submodule update --init
     patch -p1 -i "${srcdir}/windeco.patch"
 }
