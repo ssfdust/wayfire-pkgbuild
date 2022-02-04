@@ -30,7 +30,7 @@ makedepends=(
 	wayland-protocols
     vulkan-headers
 	xorgproto)
-source=("${pkgname}::git+${url}#commit=fdf3169b4185dad34b01b62762a0218f1412897f")
+source=("${pkgname}::git+${url}#commit=2c59435e8223339070f963263f2caebf07620078")
 sha512sums=('SKIP')
 
 pkgver () {
