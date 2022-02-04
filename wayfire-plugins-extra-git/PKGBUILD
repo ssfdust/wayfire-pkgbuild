@@ -14,8 +14,8 @@ provides=("${pkgname}" "wayfire-plugins-extra")
 conflicts=("wayfire-plugins-extra")
 replaces=()
 options=()
-source=("${pkgname}::git+https://github.com/ssfdust/wayfire-plugins-extra#branch=arch" "windeco.patch")
-sha256sums=('SKIP' '2abaaa689254b2016628f8322e72a8a4cc580b3fd02e40ab201493b74b7f58de')
+source=("${pkgname}::git+https://github.com/ssfdust/wayfire-plugins-extra#branch=arch" "mag.patch" "windeco.patch")
+sha256sums=('SKIP' 'e15e92e570b89551f7691498d4b0a99a56e778d3bb5aad3ff32f3b4e37b26c19' '2abaaa689254b2016628f8322e72a8a4cc580b3fd02e40ab201493b74b7f58de')
 install=wayfire-plugins-extra.install
 
 pkgver () {
