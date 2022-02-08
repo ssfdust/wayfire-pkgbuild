@@ -1,0 +1,21 @@
+diff --git a/src/mag.cpp b/src/mag.cpp 
+--- a/src/mag.cpp
++++ b/src/mag.cpp
+@@ -173,7 +173,7 @@
+     {
+         wlr_dmabuf_attributes dmabuf_attribs;
+ 
+-        if (!output->handle->front_buffer)
++        if (!output->handle->back_buffer)
+         {
+             LOGE("Got empty buffer on ", output->handle->name);
+             return;
+@@ -181,7 +181,7 @@
+ 
+         /* This plugin only works if this function succeeds. It will not
+          * work with the x11 backend but works with drm, for example. */
+-        if (!wlr_buffer_get_dmabuf(output->handle->front_buffer, &dmabuf_attribs))
++        if (!wlr_buffer_get_dmabuf(output->handle->back_buffer, &dmabuf_attribs))
+         {
+             LOGE("Failed reading output contents");
+             deactivate();
