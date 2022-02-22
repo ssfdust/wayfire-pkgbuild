@@ -16,7 +16,7 @@ Provides
     * windeco
     * wayfire-shadows
     * [wf-wallpaper](https://github.com/DankBSD/wf-wallpaper)
-* [wlroots-noassert-git](https://github.com/danvd/wlroots-eglstreams) (for nvidia)
+* wlroots-noassert-git (for nvidia)
 
 ### custom wayfire-plugins-extra
 
