@@ -1,7 +1,6 @@
 # Maintainer: Librewish <librewish@gmail.com>
-
 pkgname=wayfire-plugins-extra-git
-pkgver=0.8.0r144.8e66978
+pkgver=0.8.0.r147.a3373ec
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
 arch=('any')
@@ -15,31 +14,45 @@ conflicts=("wayfire-plugins-extra")
 replaces=()
 options=()
 source=("${pkgname}::git+https://github.com/ssfdust/wayfire-plugins-extra#branch=arch" "mag.patch" "windeco.patch")
-sha256sums=('SKIP' 'e15e92e570b89551f7691498d4b0a99a56e778d3bb5aad3ff32f3b4e37b26c19' '2abaaa689254b2016628f8322e72a8a4cc580b3fd02e40ab201493b74b7f58de')
+sha256sums=('SKIP' 'e15e92e570b89551f7691498d4b0a99a56e778d3bb5aad3ff32f3b4e37b26c19' '13ac9a2d51d77232596829374cfe1a4f0ee539761922bfe18987d95e00459015')
 install=wayfire-plugins-extra.install
 
+_builddir="build"
+_builddir_pkgver="build-pkgver"
+
+_meson_setup () {
+    arch-meson \
+        -Denable_dbus=false \
+        -Denable_windecor=true \
+        -Denable_wayfire_shadows=true \
+        -Denable_wf_wallpaper=true \
+        "${srcdir}/${pkgname}/" "$1"
+}
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    git submodule update --init
+    patch -p1 -i "${srcdir}/mag.patch"
+    patch -p1 -i "${srcdir}/windeco.patch"
+    _meson_setup "${srcdir}/${_builddir_pkgver}"
+}
+
 pkgver () {
-    cd "${srcdir}/${pkgname%}"
     (
         set -o pipefail
-        version=$(grep -zoP "project\([^)]*\)" meson.build | xargs --null echo | grep -oP "^\sversion:\s'\K[^']*")
-        printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+        meson introspect --projectinfo "${_builddir_pkgver}" \
+            | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
     )
+    cd "${srcdir}/${pkgname}"
+    printf ".r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
-prepare () {
-    cd "${srcdir}/${pkgname}"
-    patch -p1 -i "${srcdir}/mag.patch"
-    git submodule update --init
-    patch -p1 -i "${srcdir}/windeco.patch"
-}
 
 build() {
-    arch-meson -Denable_dbus=false -Denable_windecor=true -Denable_wayfire_shadows=true -Denable_wf_wallpaper=true "${srcdir}/${pkgname}/" build 
-    ninja -C build
+    _meson_setup "${srcdir}/${_builddir}"
+    meson compile -C "${srcdir}/${_builddir}"
 }
 
-
 package() {
-    DESTDIR="${pkgdir}/" ninja -C build install
+    DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
 }

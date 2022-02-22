@@ -1,6 +1,6 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.8.0r2195.9458f589
+pkgver=0.8.0.r2195.9458f589
 pkgrel=1
 pkgdesc="3D wayland compositor"
 arch=('x86_64')
@@ -17,32 +17,41 @@ options=()
 source=("${pkgname}::git+https://github.com/WayfireWM/wayfire" "grabkey.patch")
 sha256sums=('SKIP' '2e20082a7e7a0c6b1140c04de9a939c253f307560f3d7a6e58092c400524abc2')
 
-pkgver () {
-    cd "${srcdir}/${pkgname}"
-    (
-        set -o pipefail
-        version=$(grep -zoP "project\([^)]*\)" meson.build | xargs --null echo | grep -oP "^\sversion:\s'\K[^']*")
-        printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-    )
+_builddir="build"
+_builddir_pkgver="build-pkgver"
+
+_meson_setup () {
+    arch-meson \
+        -Duse_system_wlroots=enabled \
+        -Duse_system_wfconfig=enabled \
+        -Dtests=disabled \
+        "${srcdir}/${pkgname}/" "$1"
 }
 
 prepare() {
     cd "${srcdir}/${pkgname}"
     patch -p1 < "${srcdir}/grabkey.patch"
+    _meson_setup "${srcdir}/${_builddir_pkgver}"
 }
 
+pkgver () {
+    (
+        set -o pipefail
+        meson introspect --projectinfo "${_builddir_pkgver}" \
+            | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
+    )
+    cd "${srcdir}/${pkgname}"
+    printf ".r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+
 build() {
-    arch-meson \
-        -Duse_system_wlroots=enabled \
-        -Duse_system_wfconfig=enabled \
-        -Dtests=disabled \
-        "${srcdir}/${pkgname}/" \
-        build
-    ninja -C build
+    _meson_setup "${srcdir}/${_builddir}"
+    meson compile -C "${srcdir}/${_builddir}"
 }
 
 
 package() {
-    DESTDIR="${pkgdir}/" ninja -C build install
+    DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
     install -m644 "${srcdir}/${pkgname}/wayfire.ini" "${pkgdir}/usr/share"
 }

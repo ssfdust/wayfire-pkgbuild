@@ -1,6 +1,6 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 pkgname=wcm-git
-pkgver=0.8.0r239.2b139dc
+pkgver=0.8.0.r239.2b139dc
 pkgrel=1
 pkgdesc='Wayfire Config Manager'
 url=https://wayfire.org
@@ -14,21 +14,35 @@ optdepends=("wayfire-plugins-extra: configuration for extra Wayfire plugins")
 source=("${pkgname}::git+https://github.com/WayfireWM/wcm")
 sha512sums=('SKIP')
 
+_builddir="build"
+_builddir_pkgver="build-pkgver"
+
+_meson_setup () {
+    arch-meson \
+        "${srcdir}/${pkgname}/" "$1"
+}
+
+prepare() {
+    _meson_setup "${srcdir}/${_builddir_pkgver}"
+}
+
 pkgver () {
-    cd "${srcdir}/${pkgname}"
     (
         set -o pipefail
-        version=$(grep -zoP "project\([^)]*\)" meson.build | xargs --null echo | grep -oP "version[^']+'\K([^']*)")
-        printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+        meson introspect --projectinfo "${_builddir_pkgver}" \
+            | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
     )
+    cd "${srcdir}/${pkgname}"
+    printf ".r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
-build () {
-	arch-meson "${srcdir}/${pkgname}" build
-	ninja -C build
+
+build() {
+    _meson_setup "${srcdir}/${_builddir}"
+    meson compile -C "${srcdir}/${_builddir}"
 }
 
-package () {
-	DESTDIR="${pkgdir}" ninja -C build install
-}
 
+package() {
+    DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
+}

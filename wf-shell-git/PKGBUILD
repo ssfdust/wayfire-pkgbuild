@@ -1,6 +1,6 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 pkgname=wf-shell-git
-pkgver=0.8.0r201.b60b02a
+pkgver=0.8.0.r201.b60b02a
 pkgrel=1
 pkgdesc='GTK3-based panel for the Wayfire compositor'
 url=https://wayfire.org
@@ -13,23 +13,38 @@ makedepends=(wayland wayland-protocols meson ninja git gobject-introspection)
 source=("${pkgname}::git+https://github.com/WayfireWM/wf-shell")
 sha512sums=('SKIP')
 
+_builddir="build"
+_builddir_pkgver="build-pkgver"
+
+_meson_setup () {
+    arch-meson \
+        -Dpulse=enabled \
+        "${srcdir}/${pkgname}/" "$1"
+}
+
+prepare() {
+    _meson_setup "${srcdir}/${_builddir_pkgver}"
+}
+
 pkgver () {
-    cd "${srcdir}/${pkgname}"
     (
         set -o pipefail
-        version=$(grep -zoP "project\([^)]*\)" meson.build | xargs --null echo | grep -oP "^\sversion:\s'\K[^']*")
-        printf "${version}r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+        meson introspect --projectinfo "${_builddir_pkgver}" \
+            | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
     )
+    cd "${srcdir}/${pkgname}"
+    printf ".r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
-build () {
-	arch-meson "${pkgname}" build -Dpulse=enabled
-	ninja -C build
+
+build() {
+    _meson_setup "${srcdir}/${_builddir}"
+    meson compile -C "${srcdir}/${_builddir}"
 }
 
-package () {
-	DESTDIR="${pkgdir}" ninja -C build install
-	
-	install -Dm644 "${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-	install -Dm644 "${pkgname}/wf-shell.ini.example" "${pkgdir}/usr/share/doc/${pkgname}/wf-shell.ini.example"
+
+package() {
+    DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
+    install -Dm644 "${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -Dm644 "${pkgname}/wf-shell.ini.example" "${pkgdir}/usr/share/doc/${pkgname}/wf-shell.ini.example"
 }
