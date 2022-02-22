@@ -42,7 +42,7 @@ Installation
 * wcm-git
 * wf-config-git
 * wf-shell-git
-* wlroots-eglstreams-git (nvidia only)
+* wlroots-noassert-git (nvidia only)
 * wlroots-git
 
 #### Example
