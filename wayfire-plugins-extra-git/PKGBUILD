@@ -1,6 +1,6 @@
 # Maintainer: Librewish <librewish@gmail.com>
 pkgname=wayfire-plugins-extra-git
-pkgver=0.8.0.r147.a3373ec
+pkgver=0.8.0.r160.bb9fe56
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
 arch=('any')
@@ -12,9 +12,9 @@ optdepends=('wcm: GTK3-based configuration tool for the Wayfire compositor')
 provides=("${pkgname}" "wayfire-plugins-extra")
 conflicts=("wayfire-plugins-extra")
 replaces=()
-options=()
-source=("${pkgname}::git+https://github.com/ssfdust/wayfire-plugins-extra#branch=arch" "mag.patch" "windeco.patch")
-sha256sums=('SKIP' 'e15e92e570b89551f7691498d4b0a99a56e778d3bb5aad3ff32f3b4e37b26c19' '13ac9a2d51d77232596829374cfe1a4f0ee539761922bfe18987d95e00459015')
+options=(debug)
+source=("${pkgname}::git+https://github.com/ssfdust/wayfire-plugins-extra#branch=arch")
+sha256sums=('SKIP')
 install=wayfire-plugins-extra.install
 
 _builddir="build"
@@ -31,9 +31,6 @@ _meson_setup () {
 
 prepare() {
     cd "${srcdir}/${pkgname}"
-    git submodule update --init
-    patch -p1 -i "${srcdir}/mag.patch"
-    patch -p1 -i "${srcdir}/windeco.patch"
     _meson_setup "${srcdir}/${_builddir_pkgver}"
 }
 

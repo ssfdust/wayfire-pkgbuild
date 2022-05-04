@@ -10,6 +10,7 @@ depends=('libevdev' 'libxml2')
 makedepends=('git' 'wlroots' 'meson' 'ninja' 'wayland-protocols' 
               'glm' 'doctest' 'cmake')
 provides=("wf-config=0.4.0")
+options=(debug)
 conflicts=("${pkgname%-git}")
 replaces=()
 source=("${pkgname}::git+https://github.com/WayfireWM/wf-config")

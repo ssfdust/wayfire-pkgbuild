@@ -18,15 +18,9 @@ do
     then
         rm -rf pkg src "${dir}" "${dir%-git}" *.zst *.xz
         makepkg -s
-        find . -maxdepth 1 -type f -name "*debug*" -delete
-        target=$(find -maxdepth 1 -name "${dir}*.xz")
-        if [ -f "${target}" ];then
-            sudo pacman --noconfirm -U "${target}"
-        fi
-        target=$(find -maxdepth 1 -name "${dir}*.zst")
-        if [ -f "${target}" ];then
-            sudo pacman --noconfirm -U "${target}"
-        fi
+        # find . -maxdepth 1 -type f -name "*debug*" -delete
+        target=$(find -maxdepth 1 -regextype egrep -regex "./${dir}.*\.(xz|zst)" -printf "%f\n")
+        sudo pacman --noconfirm -U ${target}
         rm -rf pkg src "${dir}" "${dir%-git}" *.zst *.xz
     fi
     popd

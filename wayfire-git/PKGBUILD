@@ -1,6 +1,6 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.8.0.r2195.9458f589
+pkgver=0.8.0.r2199.94f15048
 pkgrel=1
 pkgdesc="3D wayland compositor"
 arch=('x86_64')
@@ -13,7 +13,7 @@ optdepends=('wf-shell-git: GTK3-based panel for the Wayfire compositor'
 provides=("${pkgname%-git}" "${pkgname%-git}")
 conflicts=("${pkgname%-git}" "${pkgname%-git}")
 replaces=()
-options=()
+options=(debug)
 source=("${pkgname}::git+https://github.com/WayfireWM/wayfire" "grabkey.patch")
 sha256sums=('SKIP' '2e20082a7e7a0c6b1140c04de9a939c253f307560f3d7a6e58092c400524abc2')
 
