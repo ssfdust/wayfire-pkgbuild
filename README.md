@@ -11,7 +11,7 @@ Provides
 * wf-config
 * wcm
 * wf-shell
-* [wayfire plugins extra](https://)
+* [wayfire plugins extra(custom)](https://github.com/ssfdust/wayfire-plugins-extra/tree/arch)
     * dbus-plugin
     * windeco
     * wayfire-shadows
