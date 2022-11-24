@@ -14,8 +14,8 @@ provides=("${pkgname%-git}" "${pkgname%-git}")
 conflicts=("${pkgname%-git}" "${pkgname%-git}")
 replaces=()
 options=(debug)
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire" "grabkey.patch")
-sha256sums=('SKIP' 'a0ccd107922c3edb7103b811eb34bbe21d891b55a2a5b22b88b0dacdcab2218a')
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire")
+sha256sums=('SKIP')
 
 _builddir="build"
 _builddir_pkgver="build-pkgver"
@@ -30,7 +30,6 @@ _meson_setup () {
 
 prepare() {
     cd "${srcdir}/${pkgname}"
-    # patch -p1 < "${srcdir}/grabkey.patch"
     _meson_setup "${srcdir}/${_builddir_pkgver}"
 }
 
