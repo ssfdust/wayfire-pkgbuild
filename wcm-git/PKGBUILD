@@ -1,6 +1,6 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 pkgname=wcm-git
-pkgver=0.8.0.r242.07fa518
+pkgver=0.8.0.r245.5a82f0a
 pkgrel=1
 pkgdesc='Wayfire Config Manager'
 url=https://wayfire.org
