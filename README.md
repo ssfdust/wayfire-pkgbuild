@@ -15,7 +15,7 @@ Provides
     * dbus-plugin
     * windeco
     * wayfire-shadows
-    * [wf-wallpaper](https://github.com/DankBSD/wf-wallpaper)
+    * [wf-wallpaper](https://codeberg.org/valpackett/wf-wallpaper)
 * wlroots-noassert-git (for nvidia)
 
 ### custom wayfire-plugins-extra
