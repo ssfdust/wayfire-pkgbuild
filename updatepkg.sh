@@ -1,11 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ -n "$(lsmod | grep nvidia_drm)" ];then
-    dirlist=(wlroots-noassert-git wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
-else
-    dirlist=(wlroots-git wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
-fi
+dirlist=(wlroots-git wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
 
 if [ "$1" != "" ];then
     dirlist=("$1")

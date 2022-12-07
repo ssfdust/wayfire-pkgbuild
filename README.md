@@ -16,7 +16,6 @@ Provides
     * windeco
     * wayfire-shadows
     * [wf-wallpaper](https://codeberg.org/valpackett/wf-wallpaper)
-* wlroots-noassert-git (for nvidia)
 
 ### custom wayfire-plugins-extra
 
@@ -42,7 +41,6 @@ Installation
 * wcm-git
 * wf-config-git
 * wf-shell-git
-* wlroots-noassert-git (nvidia only)
 * wlroots-git
 
 #### Example
