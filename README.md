@@ -32,19 +32,29 @@ Installation
 
 ### Partial Installation
 
-`./updatepkg.sh <Item-name>`
-
 #### List of Items
 
-* wayfire-git
-* wayfire-plugins-extra-git
-* wcm-git
-* wf-config-git
-* wf-shell-git
-* wlroots-git
+* wayfire-git (mini miniex full)
+* wayfire-plugins-extra-git (miniex full )
+* wcm-git (ful)
+* wf-config-git (mini miniex full)
+* wf-shell-git (full)
+* wlroots-git (mini miniex full)
+
+#### Installation Selection
+
+* mini
+* miniex
+* full (default)
+* custom
+
+#### Custom
+
+`./updatepkg.sh <Mode>/<Item-name>`
 
 #### Example
 
 ```bash
+./updatepkg.sh mini
 ./updatepkg.sh wayfire-plugins-extra-git
 ```
