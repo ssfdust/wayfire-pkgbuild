@@ -14,7 +14,7 @@ provides=("${pkgname%-git}" "${pkgname%-git}")
 conflicts=("${pkgname%-git}" "${pkgname%-git}")
 replaces=()
 options=(debug)
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire")
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire#commit=f2b65ef3870dc13d57fccff3394cc9dc4a9eea7e")
 sha256sums=('SKIP')
 
 _builddir="build"
