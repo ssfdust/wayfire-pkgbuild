@@ -1,6 +1,6 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.8.0.r2372.d296170e
+pkgver=0.8.0.r2490.c8f22f72
 pkgrel=1
 pkgdesc="3D wayland compositor"
 arch=('x86_64')
@@ -14,7 +14,7 @@ provides=("${pkgname%-git}" "${pkgname%-git}")
 conflicts=("${pkgname%-git}" "${pkgname%-git}")
 replaces=()
 options=(debug)
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire#commit=f2b65ef3870dc13d57fccff3394cc9dc4a9eea7e")
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire")
 sha256sums=('SKIP')
 
 _builddir="build"
