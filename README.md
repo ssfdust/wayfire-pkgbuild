@@ -13,10 +13,6 @@ Provides
 * wf-shell
 * wayfire-plugins-extra
 
-### custom wayfire-plugins-extra
-
-The install script is using my own wayfire-plugins-extra repo, to catch update with some plugins, as well as additional plugins. if you care about it, please edit the PKGBUILD in wayfire-plugins-extra, refer the git url to the office repo.
-
 Installation
 ---------------------
 
