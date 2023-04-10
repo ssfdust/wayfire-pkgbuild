@@ -1,9 +1,9 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 # Maintainer: Antonin Décimo <antonin dot decimo at gmail dot com>
 pkgname=wlroots-git
-pkgver=0.16.1.r5869.0911a41f
+pkgver=0.16.2.r5885.0a32b5a7
 pkgrel=1
-license=(custom:MIT)
+license=('MIT')
 pkgdesc='Modular Wayland compositor library (git version)'
 url=https://gitlab.freedesktop.org/wlroots/wlroots
 arch=(x86_64)
@@ -11,27 +11,35 @@ provides=("libwlroots.so" "wlroots=${pkgver%%.r*}")
 conflicts=(wlroots)
 options=(debug)
 depends=(
-    glslang
-    libinput
-    libxcb
-    libxkbcommon
-    opengl-driver
-    pixman
-    wayland
-    xcb-util-errors
-    xcb-util-renderutil
-    xcb-util-wm
-    seatd
-    vulkan-icd-loader
-    vulkan-validation-layers
-    xorg-xwayland)
+    'libglvnd'
+    'libinput'
+    'libpixman-1.so'
+    'libseat.so'
+    'libudev.so'
+    'libvulkan.so'
+    'libwayland-client.so'
+    'libwayland-server.so'
+    'libxcb'
+    'libxkbcommon.so'
+    'opengl-driver'
+    'xcb-util-errors'
+    'xcb-util-renderutil'
+    'xcb-util-wm'
+)
 makedepends=(
-    git
-    meson
-    vulkan-headers
-    wayland-protocols
-    xorgproto)
-source=("${pkgname}::git+${url}#tag=0.16.1")
+    'git'
+    'glslang'
+    'meson'
+    'ninja'
+    'systemd'
+    'vulkan-headers'
+    'wayland-protocols'
+    'xorg-xwayland'
+)
+optdepends=(
+    'xorg-xwayland: Xwayland support'
+)
+source=("${pkgname}::git+${url}#tag=0.16.2")
 sha512sums=('SKIP')
 
 _builddir="build"
