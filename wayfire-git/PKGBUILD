@@ -1,6 +1,6 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.8.0.r2517.076dc76f
+pkgver=0.8.0.r2518.4faddbdb
 pkgrel=1
 pkgdesc="3D wayland compositor"
 arch=('x86_64')
@@ -14,8 +14,8 @@ provides=("${pkgname%-git}" "${pkgname%-git}")
 conflicts=("${pkgname%-git}" "${pkgname%-git}")
 replaces=()
 options=(debug)
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire" "wayfire.patch")
-sha256sums=('SKIP' 'bff58b731c2314a134afd7631148e7590ee9293f4e887872ed4eba7a417aaab3')
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire")
+sha256sums=('SKIP')
 
 _builddir="build"
 _builddir_pkgver="build-pkgver"
@@ -46,10 +46,6 @@ pkgver () {
 
 build() {
     _meson_setup "${srcdir}/${_builddir}"
-    (
-        cd "${srcdir}/wayfire-git"
-        patch -p1 < "${srcdir}/wayfire.patch"
-    )
     meson compile -C "${srcdir}/${_builddir}"
 }
 
