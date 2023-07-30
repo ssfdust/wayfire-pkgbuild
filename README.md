@@ -6,7 +6,6 @@ Another major problem is that I have installed some plugins not owned to wayfire
 
 Provides
 ---------------------
-* wlroots
 * wayfire
 * wf-config
 * wcm
@@ -31,7 +30,6 @@ Installation
 * wcm-git (ful)
 * wf-config-git (mini miniex full)
 * wf-shell-git (full)
-* wlroots-git (mini miniex full)
 
 #### Installation Selection
 

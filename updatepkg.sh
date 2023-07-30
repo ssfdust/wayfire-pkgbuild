@@ -1,15 +1,15 @@
 #!/bin/bash
 set -e
 
-dirlist=(wlroots-git wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
+dirlist=(wf-config-git wayfire-git wayfire-plugins-extra-git)
 
 if [ "$1" = "mini" ]
 then
-    dirlist=(wlroots-git wf-config-git wayfire-git)
-elif [ "$1" = "miniex" ]
+    dirlist=(wf-config-git wayfire-git)
+elif [ "$1" = "full" ]
 then
-    dirlist=(wlroots-git wf-config-git wayfire-git wayfire-plugins-extra-git)
-elif [[ "$1" != "" && "$1" != "full" ]]
+    dirlist=(wf-config-git wayfire-git wf-shell-git wcm-git wayfire-plugins-extra-git)
+elif [[ "$1" != "" && "$1" != "miniex" ]]
 then
     dirlist=("$1")
 fi

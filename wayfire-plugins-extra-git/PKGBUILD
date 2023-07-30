@@ -1,6 +1,6 @@
 # Maintainer: Librewish <librewish@gmail.com>
 pkgname=wayfire-plugins-extra-git
-pkgver=0.8.0.r185.0807f32
+pkgver=0.8.0.r186.127bcdf
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
 arch=('any')
@@ -30,6 +30,8 @@ _meson_setup () {
 
 prepare() {
     cd "${srcdir}/${pkgname}"
+    git submodule update --init --recursive
+    git submodule update --rebase --remote
     _meson_setup "${srcdir}/${_builddir_pkgver}"
 }
 
