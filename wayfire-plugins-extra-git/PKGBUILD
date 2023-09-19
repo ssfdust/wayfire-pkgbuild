@@ -1,6 +1,6 @@
 # Maintainer: Librewish <librewish@gmail.com>
 pkgname=wayfire-plugins-extra-git
-pkgver=0.8.0.r187.06a0a48
+pkgver=0.8.0.20230901.e4b95b1
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
 arch=('any')
@@ -40,7 +40,7 @@ pkgver () {
             | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
     )
     cd "${srcdir}/${pkgname}"
-    printf ".r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    printf ".%s.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d)" "$(git rev-parse --short HEAD)"
 }
 
 

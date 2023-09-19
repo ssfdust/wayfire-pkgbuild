@@ -1,6 +1,6 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 pkgname=wcm-git
-pkgver=0.8.0.r285.6737ed3
+pkgver=0.8.0.20230828.6b28ffc
 pkgrel=1
 pkgdesc='Wayfire Config Manager'
 url=https://wayfire.org
@@ -34,7 +34,7 @@ pkgver () {
             | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
     )
     cd "${srcdir}/${pkgname}"
-    printf ".r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    printf ".%s.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d)" "$(git rev-parse --short HEAD)"
 }
 
 

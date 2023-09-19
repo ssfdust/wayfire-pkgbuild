@@ -1,6 +1,6 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.8.0.r2695.21d00ed5
+pkgver=0.8.0.20230918.916f8e3d
 pkgrel=1
 pkgdesc="3D wayland compositor"
 arch=('x86_64')
@@ -22,8 +22,7 @@ _builddir_pkgver="build-pkgver"
 
 _meson_setup () {
     arch-meson \
-        -Duse_system_wlroots=enabled \
-        -Duse_system_wfconfig=enabled \
+        --auto-features auto \
         -Dtests=disabled \
         "${srcdir}/${pkgname}/" "$1"
 }
@@ -40,7 +39,7 @@ pkgver () {
             | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
     )
     cd "${srcdir}/${pkgname}"
-    printf ".r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    printf ".%s.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d)" "$(git rev-parse --short HEAD)"
 }
 
 
