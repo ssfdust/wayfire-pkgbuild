@@ -1,0 +1,51 @@
+# Maintainer: ssfdust <ssfdust@gmail.com>
+pkgname=wayfire-plugins-unsupported-git
+pkgver=0.8.0.20230919.956aef4
+pkgrel=1
+pkgdesc="3D wayland compositor unsupported plugins"
+arch=('any')
+url="https://gitlab.com/ssfdust/wayfire-plugins-unsupported"
+license=('MIT')
+depends=('wayfire-git' 'gdk-pixbuf2' 'iio-sensor-proxy' 'pango' 'cairo' 'boost'
+         'glib2' 'librsvg' 'pixman')
+makedepends=('git' 'meson' 'ninja')
+optdepends=('wcm: GTK3-based configuration tool for the Wayfire compositor')
+provides=("${pkgname}" "wayfire-plugins-unsupported")
+conflicts=("wayfire-plugins-unsupported")
+replaces=()
+options=(debug)
+source=("${pkgname}::git+https://gitlab.com/ssfdust/wayfire-plugins-unsupported.git")
+sha256sums=('SKIP')
+
+_builddir="build"
+_builddir_pkgver="build-pkgver"
+
+_meson_setup () {
+    arch-meson \
+        "${srcdir}/${pkgname}/" "$1"
+}
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    _meson_setup "${srcdir}/${_builddir_pkgver}"
+}
+
+pkgver () {
+    (
+        set -o pipefail
+        meson introspect --projectinfo "${_builddir_pkgver}" \
+            | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
+    )
+    cd "${srcdir}/${pkgname}"
+    printf ".%s.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d)" "$(git rev-parse --short HEAD)"
+}
+
+
+build() {
+    _meson_setup "${srcdir}/${_builddir}"
+    meson compile -C "${srcdir}/${_builddir}"
+}
+
+package() {
+    DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
+}
