@@ -11,6 +11,9 @@ Provides
 * wcm
 * wf-shell
 * wayfire-plugins-extra
+* wayfire-plugins-unsupported
+  * [firedecor](https://github.com/mntmn/Firedecor)
+  * [wf-wallpaper](https://codeberg.org/Clyybber/wf-wallpaper/src/branch/wayfire08)
 
 Installation
 ---------------------
@@ -26,16 +29,17 @@ Installation
 #### List of Items
 
 * wayfire-git (mini miniex full)
-* wayfire-plugins-extra-git (miniex full )
-* wcm-git (ful)
 * wf-config-git (mini miniex full)
+* wayfire-plugins-extra-git (miniex full )
+* wayfire-plugins-unsupported (miniex full)
 * wf-shell-git (full)
+* wcm-git (ful)
 
-#### Installation Selection
+#### Installation Mode
 
 * mini
-* miniex
-* full (default)
+* miniex (default)
+* full
 * custom
 
 #### Custom
