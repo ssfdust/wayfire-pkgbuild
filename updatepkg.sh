@@ -16,6 +16,7 @@ fi
 
 for dir in ${dirlist[@]}
 do
+    dir=${dir%/}
     pushd "${dir}" > /dev/null
     if [ -f "PKGBUILD" ]; 
     then
