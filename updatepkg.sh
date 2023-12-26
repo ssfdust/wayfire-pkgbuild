@@ -14,6 +14,13 @@ then
     dirlist=("$1")
 fi
 
+if [ -d packages ]
+then
+    rm -rf packages/*
+else
+    mkdir -p packages
+fi
+
 for dir in ${dirlist[@]}
 do
     dir=${dir%/}
@@ -23,8 +30,8 @@ do
         rm -rf pkg src "${dir}" "${dir%-git}" *.zst *.xz
         makepkg -s
         # find . -maxdepth 1 -type f -name "*debug*" -delete
-        target=$(find -maxdepth 1 -regextype egrep -regex "./${dir}.*\.(xz|zst)" -printf "%f\n")
-        sudo pacman --noconfirm -U ${target}
+        find -maxdepth 1 -regextype egrep -regex "./${dir}.*\.(xz|zst)" -printf "%f\n" -exec cp -v {} ../packages \;
+        find -maxdepth 1 -regextype egrep -regex "./${dir}.*\.(xz|zst)" -printf "%f\n" -exec sudo pacman --noconfirm -U {} \;
         rm -rf pkg src "${dir}" "${dir%-git}" *.zst *.xz
     fi
     popd
