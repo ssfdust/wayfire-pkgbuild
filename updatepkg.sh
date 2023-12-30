@@ -28,7 +28,7 @@ do
     if [ -f "PKGBUILD" ]; 
     then
         rm -rf pkg src "${dir}" "${dir%-git}" *.zst *.xz
-        makepkg -s
+        makepkg -s --noconfirm
         # find . -maxdepth 1 -type f -name "*debug*" -delete
         find -maxdepth 1 -regextype egrep -regex "./${dir}.*\.(xz|zst)" -printf "%f\n" -exec cp -v {} ../packages \;
         find -maxdepth 1 -regextype egrep -regex "./${dir}.*\.(xz|zst)" -printf "%f\n" -exec sudo pacman --noconfirm -U {} \;
