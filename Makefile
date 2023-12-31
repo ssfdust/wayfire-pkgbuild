@@ -12,5 +12,8 @@ image:
 
 podman-miniex:
 	chmod 777 packages
-	podman run --rm -it -v "$(shell pwd)/packages:/home/pkgbuilder/packages:z" ssfdust/wayfire-builder:$(shell date +%Y%m%d) miniex
+	podman run --rm -it -v "$(shell pwd)/packages:/home/pkgbuilder/wayfire/packages:z" ssfdust/wayfire-builder:$(shell date +%Y%m%d) miniex
 	chmod 755 packages
+
+podman-bash:
+	podman run --rm -it -v "$(shell pwd):/home/pkgbuilder/wayfire" --entrypoint /bin/bash ssfdust/wayfire-builder:$(shell date +%Y%m%d)

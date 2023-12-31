@@ -1,6 +1,5 @@
 FROM archlinux:latest
 
-ADD . /home/pkgbuilder
 RUN pacman -Sy --noconfirm --needed \
         base-devel \
         git \
@@ -22,13 +21,15 @@ RUN pacman -Sy --noconfirm --needed \
         iio-sensor-proxy \
         librsvg \
         boost \
-    && useradd pkgbuilder -g wheel -u 1000 \
+    && useradd pkgbuilder -g wheel -u 1000 -m \
     && chown -R pkgbuilder:wheel /home/pkgbuilder \
-    && mkdir -p /home/pkgbuilder/packages \
+    && mkdir -p /home/pkgbuilder/wayfire/packages \
     && sed -i "s/# \(%wheel.*NOPASSWD.*\)/\1/" /etc/sudoers \
     && rm -rf /var/cache/pacman/pkg/*
+ADD . /home/pkgbuilder/wayfire
+RUN chown -R pkgbuilder:wheel /home/pkgbuilder
 
-VOLUME /home/pkgbuilder/packages
-WORKDIR /home/pkgbuilder
+VOLUME /home/pkgbuilder/wayfire/packages
+WORKDIR /home/pkgbuilder/wayfire
 USER pkgbuilder
-ENTRYPOINT ["/home/pkgbuilder/updatepkg.sh"]
+ENTRYPOINT ["/home/pkgbuilder/wayfire/updatepkg.sh"]
