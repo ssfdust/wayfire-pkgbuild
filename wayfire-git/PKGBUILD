@@ -14,12 +14,13 @@ provides=("${pkgname%-git}" "${pkgname%-git}")
 conflicts=("${pkgname%-git}" "${pkgname%-git}")
 replaces=()
 options=(debug)
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire.git" "01-nofile.patch")
+source=("${pkgname}::git+https://github.com/WayfireWM/wayfire.git" "01-nofile.patch" "02-disable-close-popups.patch")
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#branch=lilydjwg")
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#commit=6700783e71fc47e13435c7ed693b3d0e6cd2c030")
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#commit=b662d4c081f984c12f69645ddec17dfc2467d1c9")
 sha256sums=('SKIP'
             '2d36481fa391a61bd21fa5ef338088edeb5a8b0da4ced0e85edfbef494d693d1'
+            'bd871c81edc95d2a8824857b10f77b23df1c2bf9a0120f4c3f31878a11601719'
             )
 
 _builddir="build"

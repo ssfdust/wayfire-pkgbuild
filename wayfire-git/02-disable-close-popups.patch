@@ -1,0 +1,20 @@
+diff --git a/src/view/xdg-shell.cpp b/src/view/xdg-shell.cpp
+index 243c7140..664b023a 100644
+--- a/src/view/xdg-shell.cpp
++++ b/src/view/xdg-shell.cpp
+@@ -47,13 +47,13 @@ wayfire_xdg_popup::wayfire_xdg_popup(wlr_xdg_popup *popup) : wf::view_interface_
+     {
+         // 'toplevel' popups are responsible for closing their popup tree when the parent loses focus.
+         // Note: we shouldn't close nested popups manually, since the parent popups will destroy them as well.
+-        this->on_keyboard_focus_changed = [=] (wf::keyboard_focus_changed_signal *ev)
++/*        this->on_keyboard_focus_changed = [=] (wf::keyboard_focus_changed_signal *ev)
+         {
+             if (ev->new_focus != popup_parent->get_surface_root_node())
+             {
+                 this->close();
+             }
+-        };
++        }; */
+     }
+ 
+     on_surface_commit.set_callback([&] (void*) { commit(); });
