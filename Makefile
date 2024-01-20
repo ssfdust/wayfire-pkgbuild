@@ -8,6 +8,7 @@ mini:
 	./updatepkg.sh mini
 
 image:
+	podman pull archlinux
 	podman build -t ssfdust/wayfire-builder:$(shell date +%Y%m%d) .
 
 podman-miniex:

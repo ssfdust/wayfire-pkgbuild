@@ -1,6 +1,7 @@
 FROM archlinux:latest
 
-RUN pacman -Sy --noconfirm --needed \
+RUN pacman -Syu --noconfirm \
+    && pacman -S --noconfirm --needed \
         base-devel \
         git \
         sudo \

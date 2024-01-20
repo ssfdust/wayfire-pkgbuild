@@ -1,8 +1,19 @@
+From 2e65077871fd257f356a938d524369d1e5d29bf2 Mon Sep 17 00:00:00 2001
+From: lilydjwg <lilydjwg@gmail.com>
+Date: Tue, 28 Dec 2021 19:24:51 +0800
+Subject: [PATCH] increase nofile limit
+
+---
+ src/core/core.cpp |  2 ++
+ src/main.cpp      | 33 +++++++++++++++++++++++++++++++++
+ src/main.hpp      |  6 ++++++
+ 3 files changed, 41 insertions(+)
+
 diff --git a/src/core/core.cpp b/src/core/core.cpp
-index a02dfbfa..9c7e929d 100644
+index aa8a5039..63d73bdf 100644
 --- a/src/core/core.cpp
 +++ b/src/core/core.cpp
-@@ -404,6 +404,8 @@ pid_t wf::compositor_core_impl_t::run(std::string command)
+@@ -417,6 +417,8 @@ pid_t wf::compositor_core_impl_t::run(std::string command)
                  close(dev_null);
              }
  
@@ -12,7 +23,7 @@ index a02dfbfa..9c7e929d 100644
          } else
          {
 diff --git a/src/main.cpp b/src/main.cpp
-index d08453b6..173d0687 100644
+index bfec5cf6..28e7bcba 100644
 --- a/src/main.cpp
 +++ b/src/main.cpp
 @@ -234,6 +234,37 @@ void parse_extended_debugging(const std::vector<std::string>& categories)
@@ -53,7 +64,7 @@ index d08453b6..173d0687 100644
  int main(int argc, char *argv[])
  {
      wf::log::log_level_t log_level = wf::log::LOG_LEVEL_INFO;
-@@ -379,6 +410,8 @@ int main(int argc, char *argv[])
+@@ -382,6 +413,8 @@ int main(int argc, char *argv[])
          return EXIT_FAILURE;
      }
  
@@ -83,3 +94,6 @@ index 93d5f276..26d86978 100644
 +static struct rlimit original_nofile_rlimit;
 +
  #endif /* end of include guard: MAIN_HPP */
+-- 
+2.43.0
+
