@@ -16,8 +16,6 @@ replaces=()
 options=(debug)
 source=(
     "${pkgname}::git+https://github.com/WayfireWM/wayfire.git"
-    "0001-input-method-fix-interaction-with-plugin-grabs.patch"
-    "0002-input-method-don-t-send-a-release-event-without-a-co.patch"
     "0003-increase-nofile-limit.patch"
 )
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#branch=lilydjwg")
@@ -25,8 +23,6 @@ source=(
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#commit=b662d4c081f984c12f69645ddec17dfc2467d1c9")
 sha256sums=(
     'SKIP'
-    '2ad2d6a001c8ce09a0fb5872053e81146f8383bdc5f9a6136c5c409f00495872'
-    '5dab37e43d8cb9768d2562066f9cbfb320df511e386f557ab7f9bab3b9638a23'
     '35e42b63b003d0a0552e5a63f5cf768d1e68bba65b746729269cee8077b7d585'
 )
 
