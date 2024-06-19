@@ -15,7 +15,7 @@ conflicts=("${pkgname%-git}" "${pkgname%-git}")
 replaces=()
 options=(debug)
 source=(
-    "${pkgname}::git+https://github.com/WayfireWM/wayfire.git#branch=fix-2381"
+    "${pkgname}::git+https://github.com/WayfireWM/wayfire.git"
     "0003-increase-nofile-limit.patch"
 )
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#branch=lilydjwg")
