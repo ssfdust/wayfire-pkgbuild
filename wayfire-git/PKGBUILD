@@ -31,7 +31,6 @@ _builddir_pkgver="build-pkgver"
 
 _meson_setup () {
     arch-meson \
-        --buildtype=debug -Db_sanitize=address,undefined \
         --auto-features auto \
         -Dtests=disabled \
         "${srcdir}/${pkgname}/" "$1"
