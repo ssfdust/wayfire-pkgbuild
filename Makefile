@@ -11,9 +11,18 @@ image:
 	podman pull archlinux
 	podman build -t ssfdust/wayfire-builder:$(shell date +%Y%m%d) .
 
+nocache-image:
+	podman pull archlinux
+	podman build --no-cache -t ssfdust/wayfire-builder:$(shell date +%Y%m%d) .
+
 podman-miniex:
 	chmod 777 packages
 	podman run --rm -it -v "$(shell pwd)/packages:/home/pkgbuilder/wayfire/packages:z" ssfdust/wayfire-builder:$(shell date +%Y%m%d) miniex
+	chmod 755 packages
+
+podman-full:
+	chmod 777 packages
+	podman run --rm -it -v "$(shell pwd)/packages:/home/pkgbuilder/wayfire/packages:z" ssfdust/wayfire-builder:$(shell date +%Y%m%d) full
 	chmod 755 packages
 
 podman-bash:

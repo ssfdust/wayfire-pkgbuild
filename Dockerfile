@@ -1,27 +1,36 @@
 FROM archlinux:latest
 
-RUN pacman -Syu --noconfirm \
+RUN gpgconf --kill all \
+    && rm -rf /etc/pacman.d/gnupg \
+    && pacman-key --init \
+    && pacman-key --populate \
+    && pacman -Syu --noconfirm \
     && pacman -S --noconfirm --needed \
         base-devel \
+        boost \
+        cairo \
+        cmake \
+        doctest \
         git \
-        sudo \
-        wlroots \
+        glib2-devel \
+        glibmm \
+        glm \
+        gobject-introspection \
+        gtk-layer-shell \
+        gtkmm3 \
+        iio-sensor-proxy \
+        libdbusmenu-gtk3 \
+        libjpeg \
+        libpulse \
+        librsvg \
         meson \
         ninja \
-        cairo \
-        glm \
-        libjpeg \
-        seatd \
-        pango \
-        wayland-protocols \
-        glm \
-        doctest \
         nlohmann-json \
-        cmake \
-        glibmm \
-        iio-sensor-proxy \
-        librsvg \
-        boost \
+        pango \
+        seatd \
+        sudo \
+        wayland-protocols \
+        wlroots \
     && useradd pkgbuilder -g wheel -u 1000 -m \
     && chown -R pkgbuilder:wheel /home/pkgbuilder \
     && mkdir -p /home/pkgbuilder/wayfire/packages \
