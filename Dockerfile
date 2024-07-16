@@ -30,7 +30,6 @@ RUN gpgconf --kill all \
         seatd \
         sudo \
         wayland-protocols \
-        wlroots \
     && useradd pkgbuilder -g wheel -u 1000 -m \
     && chown -R pkgbuilder:wheel /home/pkgbuilder \
     && mkdir -p /home/pkgbuilder/wayfire/packages \
