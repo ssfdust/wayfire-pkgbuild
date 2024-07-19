@@ -1,6 +1,7 @@
 # Maintainer: Librewish <librewish@gmail.com>
 pkgname=wayfire-plugins-extra-git
-pkgver=0.9.0.20231221.6ab854a
+pkgver=0.9.0.r20240627.377086d
+_pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
 arch=('any')
@@ -9,8 +10,8 @@ license=('MIT')
 depends=('wayfire-git' 'glibmm' 'iio-sensor-proxy' 'pango')
 makedepends=('git' 'meson' 'ninja')
 optdepends=('wcm: GTK3-based configuration tool for the Wayfire compositor')
-provides=("${pkgname}" "wayfire-plugins-extra")
-conflicts=("wayfire-plugins-extra")
+provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
+conflicts=("${pkgname%-git}" "${pkgname}")
 replaces=()
 options=(debug)
 source=("${pkgname}::git+https://github.com/WayfireWM/wayfire-plugins-extra")
@@ -40,7 +41,7 @@ pkgver () {
             | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
     )
     cd "${srcdir}/${pkgname}"
-    printf ".%s.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d)" "$(git rev-parse --short HEAD)"
+    printf ".r%s.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d)" "$(git rev-parse --short HEAD)"
 }
 
 

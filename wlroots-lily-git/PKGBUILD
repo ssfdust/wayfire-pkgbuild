@@ -3,7 +3,8 @@
 # Contributor: Maxim Baz <$pkgname at maximbaz dot com>
 # Contributor: Omar Pakker
 pkgname=wlroots-lily-git
-pkgver=0.17.0.20231207.070459
+pkgver=0.17.4.r20240629.054406
+_pkgver=${pkgver%%.r*}
 pkgrel=1
 license=('MIT')
 pkgdesc='Modular Wayland compositor library (git version, with patches)'
@@ -26,7 +27,6 @@ depends=(
     'xcb-util-errors'
     'xcb-util-renderutil'
     'xcb-util-wm'
-
     'xorg-xwayland')
 makedepends=(
     'git'
@@ -43,9 +43,10 @@ optdepends=(
 )
 provides=(
     'libwlroots.so'
+    "wlroots${_pkgver%.*}"
     "wlroots=${pkgver%%.r*}"
 )
-conflicts=(wlroots wlroots-git)
+conflicts=(wlroots wlroots-git "wlroots${_pkgver%.*}")
 options=(
     'debug'
 )
@@ -57,7 +58,7 @@ pkgver() {
   (
      set -o pipefail
      version=$(grep -zoP "project\([^)]*\)" meson.build | xargs --null echo | grep -oP "^\sversion:\s'\K[^-']*")
-     printf "${version}.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d.%H%M%S)"
+     printf "${version}.r%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d.%H%M%S)"
   )
 }
 

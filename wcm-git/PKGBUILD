@@ -1,13 +1,14 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 pkgname=wcm-git
-pkgver=0.9.0.20231201.9f871a8
+pkgver=0.9.0.r20240629.5aea83e
+_pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc='Wayfire Config Manager'
 url=https://wayfire.org
 arch=(x86_64)
 license=(custom:MIT)
-provides=("${pkgname%-git}")
-conflicts=("${pkgname%-git}")
+provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
+conflicts=("${pkgname%-git}" "${pkgname}")
 depends=(gtkmm3 wayfire-git wf-shell-git)
 options=(debug)
 makedepends=(wayland-protocols meson ninja git extra-cmake-modules)
@@ -34,7 +35,7 @@ pkgver () {
             | awk 'match($0, /"version":\s*"([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)"/, ret) {printf "%s",ret[1]}'
     )
     cd "${srcdir}/${pkgname}"
-    printf ".%s.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d)" "$(git rev-parse --short HEAD)"
+    printf ".r%s.%s" "$(TZ=UTC git log -1 --pretty='%cd' --date=format-local:%Y%m%d)" "$(git rev-parse --short HEAD)"
 }
 
 
