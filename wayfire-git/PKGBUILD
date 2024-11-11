@@ -24,7 +24,7 @@ source=(
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#commit=b662d4c081f984c12f69645ddec17dfc2467d1c9")
 sha256sums=(
     'SKIP'
-    '35e42b63b003d0a0552e5a63f5cf768d1e68bba65b746729269cee8077b7d585'
+    '5b3301ecd817744db010509b254f30c883e293b53012f7fe276a13be1eb01091'
 )
 
 _builddir="build"

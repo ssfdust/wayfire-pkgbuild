@@ -1,19 +1,19 @@
-From 2e65077871fd257f356a938d524369d1e5d29bf2 Mon Sep 17 00:00:00 2001
-From: lilydjwg <lilydjwg@gmail.com>
-Date: Tue, 28 Dec 2021 19:24:51 +0800
+From 384ffef54110b247f6eeb8806f28eac22459b526 Mon Sep 17 00:00:00 2001
+From: ssfdust <ssfdust@gmail.com>
+Date: Mon, 11 Nov 2024 11:01:13 +0800
 Subject: [PATCH] increase nofile limit
 
 ---
  src/core/core.cpp |  2 ++
  src/main.cpp      | 33 +++++++++++++++++++++++++++++++++
- src/main.hpp      |  6 ++++++
- 3 files changed, 41 insertions(+)
+ src/main.hpp      |  5 +++++
+ 3 files changed, 40 insertions(+)
 
 diff --git a/src/core/core.cpp b/src/core/core.cpp
-index aa8a5039..63d73bdf 100644
+index 6c13c1cc..f7a02e53 100644
 --- a/src/core/core.cpp
 +++ b/src/core/core.cpp
-@@ -417,6 +417,8 @@ pid_t wf::compositor_core_impl_t::run(std::string command)
+@@ -474,6 +474,8 @@ pid_t wf::compositor_core_impl_t::run(std::string command)
                  close(dev_null);
              }
  
@@ -23,10 +23,10 @@ index aa8a5039..63d73bdf 100644
          } else
          {
 diff --git a/src/main.cpp b/src/main.cpp
-index bfec5cf6..28e7bcba 100644
+index 0573ac88..98207c19 100644
 --- a/src/main.cpp
 +++ b/src/main.cpp
-@@ -234,6 +234,37 @@ void parse_extended_debugging(const std::vector<std::string>& categories)
+@@ -259,6 +259,37 @@ void parse_extended_debugging(const std::vector<std::string>& categories)
  // }
  // }
  //
@@ -64,7 +64,7 @@ index bfec5cf6..28e7bcba 100644
  int main(int argc, char *argv[])
  {
      wf::log::log_level_t log_level = wf::log::LOG_LEVEL_INFO;
-@@ -382,6 +413,8 @@ int main(int argc, char *argv[])
+@@ -415,6 +446,8 @@ int main(int argc, char *argv[])
          return EXIT_FAILURE;
      }
  
@@ -74,10 +74,10 @@ index bfec5cf6..28e7bcba 100644
      if (!backend)
      {
 diff --git a/src/main.hpp b/src/main.hpp
-index 93d5f276..26d86978 100644
+index 8c6aa8be..1d749f52 100644
 --- a/src/main.hpp
 +++ b/src/main.hpp
-@@ -1,10 +1,16 @@
+@@ -1,6 +1,8 @@
  #ifndef MAIN_HPP
  #define MAIN_HPP
  
@@ -86,14 +86,14 @@ index 93d5f276..26d86978 100644
  extern struct wf_runtime_config
  {
      bool no_damage_track = false;
+@@ -8,4 +10,7 @@ extern struct wf_runtime_config
      bool damage_debug    = false;
  } runtime_config;
  
 +void restore_nofile_limit(void);
-+
 +static struct rlimit original_nofile_rlimit;
 +
  #endif /* end of include guard: MAIN_HPP */
 -- 
-2.43.0
+2.47.0
 
