@@ -3,7 +3,7 @@
 # Contributor: Maxim Baz <$pkgname at maximbaz dot com>
 # Contributor: Omar Pakker
 pkgname=wlroots-lily-git
-pkgver=0.17.4.r20240629.054406
+pkgver=0.18.2.r20241219.081711
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 license=('MIT')
