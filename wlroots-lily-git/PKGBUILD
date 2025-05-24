@@ -13,6 +13,7 @@ arch=('x86_64')
 depends=(
     'libdisplay-info.so'
     'libliftoff.so'
+    'liblcms2.so'
     'libglvnd'
     'libinput'
     'libpixman-1.so'

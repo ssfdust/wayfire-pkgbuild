@@ -4,6 +4,12 @@ This is my custom PKGBUILD collection to build wayfire from git. There're some p
 
 Another major problem is that I have installed some plugins not owned to wayfire-plugins-extra-git and I have to re-compile them after all packages installed. That's why I have to create the repo.
 
+Requirements
+---------------------
+* base-devel
+* devtools (recommanded, optional)
+* podman (optional)
+
 Provides
 ---------------------
 * wayfire

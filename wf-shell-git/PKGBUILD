@@ -1,6 +1,6 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 pkgname=wf-shell-git
-pkgver=0.8.0.r20240620.3e7576f
+pkgver=0.10.0.r20250113.aaadead
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc='GTK3-based panel for the Wayfire compositor'
