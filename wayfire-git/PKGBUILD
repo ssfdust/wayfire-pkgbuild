@@ -1,6 +1,6 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.10.0.r20250519.55131c65
+pkgver=0.10.0.r20250601.32c4ada7
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor"
@@ -66,4 +66,5 @@ build() {
 package() {
     DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
     install -m644 "${srcdir}/${pkgname}/wayfire.ini" "${pkgdir}/usr/share"
+    install -Dm644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }

@@ -1,10 +1,10 @@
 # Maintainer: ssfdust <ssfdust@gmail.com>
 pkgname=wayfire-plugins-unsupported-git
-pkgver=0.10.0.r20250304.959f0d8
+pkgver=0.10.0.r20250612.cb532af
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor unsupported plugins"
-arch=('any')
+arch=('x86_64')
 url="https://gitlab.com/ssfdust/wayfire-plugins-unsupported"
 license=('MIT')
 depends=('wayfire-git' 'gdk-pixbuf2' 'iio-sensor-proxy' 'pango' 'cairo' 'boost-libs'
@@ -49,4 +49,5 @@ build() {
 
 package() {
     DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
+    install -Dm644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }

@@ -7,7 +7,7 @@ pkgdesc="A library for managing configuration files, written for wayfire"
 arch=('x86_64')
 url="https://github.com/WayfireWM/wf-config"
 license=('MIT')
-depends=('libevdev' 'libxml2')
+depends=('glibc' 'gcc-libs' 'libevdev' 'libxml2')
 makedepends=('git' 'wlroots' 'meson' 'ninja' 'wayland-protocols' 
               'glm' 'doctest' 'cmake')
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
@@ -48,4 +48,5 @@ build() {
 
 package() {
     DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
+    install -Dm644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }

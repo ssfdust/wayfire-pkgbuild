@@ -6,7 +6,7 @@ pkgrel=1
 pkgdesc='Wayfire Config Manager'
 url=https://wayfire.org
 arch=(x86_64)
-license=(custom:MIT)
+license=(MIT)
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
 depends=(gtkmm3 wayfire-git wf-shell-git)
@@ -47,4 +47,5 @@ build() {
 
 package() {
     DESTDIR="${pkgdir}/" meson install -C "${srcdir}/${_builddir}"
+    install -Dm644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
