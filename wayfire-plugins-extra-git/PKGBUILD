@@ -1,6 +1,6 @@
 # Maintainer: Librewish <librewish@gmail.com>
 pkgname=wayfire-plugins-extra-git
-pkgver=0.10.0.r20250506.e8b974f
+pkgver=0.10.0.r20250717.2ef35e8
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
@@ -8,7 +8,7 @@ arch=('x86_64')
 url="https://github.com/WayfireWM/wayfire-plugins-extra"
 license=('MIT')
 depends=('wayfire-git' 'glibmm' 'iio-sensor-proxy' 'pango' 'boost-libs')
-makedepends=('git' 'meson' 'ninja' 'boost')
+makedepends=('git' 'meson' 'ninja' 'boost' 'vulkan-headers')
 optdepends=('wcm: GTK3-based configuration tool for the Wayfire compositor')
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
@@ -24,9 +24,9 @@ _builddir_pkgver="build-pkgver"
 _meson_setup () {
     arch-meson \
         -Denable_focus_request=true \
-        -Denable_wayfire_shadows=true \
-        -Denable_pixdecor=true \
-        -Denable_filters=true \
+        -Denable_wayfire_shadows=false \
+        -Denable_pixdecor=false \
+        -Denable_filters=false \
         "${srcdir}/${pkgname}/" "$1"
 }
 

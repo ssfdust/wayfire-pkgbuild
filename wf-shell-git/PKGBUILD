@@ -11,7 +11,7 @@ provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
 options=()
 depends=(wf-config gtkmm3 gtk-layer-shell libdbusmenu-gtk3 libpulse)
-makedepends=(wayland wayland-protocols meson ninja git gobject-introspection glib2-devel)
+makedepends=(wayland wayland-protocols meson ninja git gobject-introspection glib2-devel vulkan-headers)
 source=("${pkgname}::git+https://github.com/WayfireWM/wf-shell")
 sha512sums=('SKIP')
 

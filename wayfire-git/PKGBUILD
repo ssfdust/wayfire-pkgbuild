@@ -1,6 +1,6 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.10.0.r20250601.32c4ada7
+pkgver=0.10.0.r20250719.a1d73f58
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor"
@@ -8,7 +8,7 @@ arch=('x86_64')
 url="https://github.com/ammen99/wayfire"
 license=('MIT')
 depends=('wlroots' 'cairo' 'yyjson' 'glm' 'libjpeg' 'wf-config-git' 'seatd' 'pango')
-makedepends=('git' 'meson' 'ninja' 'wayland-protocols' 'doctest' 'cmake' 'nlohmann-json')
+makedepends=('git' 'meson' 'ninja' 'wayland-protocols' 'doctest' 'cmake' 'nlohmann-json' 'vulkan-headers')
 optdepends=('wf-shell-git: GTK3-based panel for the Wayfire compositor'
             'wf-sound-control-git: Small utility for the Wayfire compositor to control sound volume')
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
@@ -17,14 +17,12 @@ replaces=()
 options=(debug)
 source=(
     "${pkgname}::git+https://github.com/WayfireWM/wayfire.git"
-    "0003-increase-nofile-limit.patch"
 )
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#branch=lilydjwg")
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#commit=6700783e71fc47e13435c7ed693b3d0e6cd2c030")
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#commit=b662d4c081f984c12f69645ddec17dfc2467d1c9")
 sha256sums=(
     'SKIP'
-    '5b3301ecd817744db010509b254f30c883e293b53012f7fe276a13be1eb01091'
 )
 
 _builddir="build"
@@ -39,10 +37,10 @@ _meson_setup () {
 
 prepare() {
     cd "${srcdir}/${pkgname}"
-    for patch in "${srcdir}"/*.patch; do
-        msg2 "Applying $(basename "$patch")"
-        patch -Np1 -i "$patch"
-    done
+    # for patch in "${srcdir}"/*.patch; do
+    #     msg2 "Applying $(basename "$patch")"
+    #     patch -Np1 -i "$patch"
+    # done
     _meson_setup "${srcdir}/${_builddir_pkgver}"
 }
 

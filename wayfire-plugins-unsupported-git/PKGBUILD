@@ -1,6 +1,6 @@
 # Maintainer: ssfdust <ssfdust@gmail.com>
 pkgname=wayfire-plugins-unsupported-git
-pkgver=0.10.0.r20250612.cb532af
+pkgver=0.10.0.r20250721.c47b640
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor unsupported plugins"
@@ -9,7 +9,7 @@ url="https://gitlab.com/ssfdust/wayfire-plugins-unsupported"
 license=('MIT')
 depends=('wayfire-git' 'gdk-pixbuf2' 'iio-sensor-proxy' 'pango' 'cairo' 'boost-libs'
          'glib2' 'librsvg' 'pixman')
-makedepends=('git' 'meson' 'ninja' 'boost')
+makedepends=('git' 'meson' 'ninja' 'boost' 'vulkan-headers')
 optdepends=('wcm: GTK3-based configuration tool for the Wayfire compositor')
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
