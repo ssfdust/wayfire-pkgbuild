@@ -24,9 +24,9 @@ _builddir_pkgver="build-pkgver"
 _meson_setup () {
     arch-meson \
         -Denable_focus_request=true \
-        -Denable_wayfire_shadows=false \
-        -Denable_pixdecor=false \
-        -Denable_filters=false \
+        -Denable_wayfire_shadows=true \
+        -Denable_pixdecor=true \
+        -Denable_filters=true \
         "${srcdir}/${pkgname}/" "$1"
 }
 
