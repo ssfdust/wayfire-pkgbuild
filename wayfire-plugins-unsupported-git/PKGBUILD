@@ -1,6 +1,6 @@
 # Maintainer: ssfdust <ssfdust@gmail.com>
 pkgname=wayfire-plugins-unsupported-git
-pkgver=0.10.0.r20250721.c47b640
+pkgver=0.10.0.r20250810.576b072
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor unsupported plugins"
