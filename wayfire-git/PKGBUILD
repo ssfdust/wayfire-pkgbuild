@@ -17,14 +17,12 @@ replaces=()
 options=(debug)
 source=(
     "${pkgname}::git+https://github.com/WayfireWM/wayfire.git"
-    "0001-xwayland-offer-focus-in-global-active-cases.patch"
 )
 # source=("${pkgname}::git+https://github.com/ssfdust/wayfire.git#branch=fix_wechat_popup")
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#commit=6700783e71fc47e13435c7ed693b3d0e6cd2c030")
 # source=("${pkgname}::git+https://github.com/lilydjwg/wayfire.git#commit=b662d4c081f984c12f69645ddec17dfc2467d1c9")
 sha256sums=(
     'SKIP'
-    '7e98620929c61f0ca1a05adfe8a4571c309275c213db158a2edb6a10293a165c'
 )
 
 _builddir="build"
@@ -39,10 +37,10 @@ _meson_setup () {
 
 prepare() {
     cd "${srcdir}/${pkgname}"
-    for patch in "${srcdir}"/*.patch; do
-        msg2 "Applying $(basename "$patch")"
-        patch -Np1 -i "$patch"
-    done
+    # for patch in "${srcdir}"/*.patch; do
+    #     msg2 "Applying $(basename "$patch")"
+    #     patch -Np1 -i "$patch"
+    # done
     _meson_setup "${srcdir}/${_builddir_pkgver}"
 }
 
