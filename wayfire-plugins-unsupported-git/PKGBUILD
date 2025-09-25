@@ -8,8 +8,8 @@ arch=('x86_64')
 url="https://gitlab.com/ssfdust/wayfire-plugins-unsupported"
 license=('MIT')
 depends=('wayfire-git' 'gdk-pixbuf2' 'iio-sensor-proxy' 'pango' 'cairo' 'boost-libs'
-         'glib2' 'librsvg' 'pixman')
-makedepends=('git' 'meson' 'ninja' 'boost' 'vulkan-headers' 'cairomm')
+         'glib2' 'librsvg' 'pixman' 'cairomm')
+makedepends=('git' 'meson' 'ninja' 'boost' 'vulkan-headers')
 optdepends=('wcm: GTK3-based configuration tool for the Wayfire compositor')
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
