@@ -24,7 +24,6 @@ depends=(
   pango
   pixman
   systemd-libs
-  vulkan-icd-loader
   wayland
   "wf-config>=${pkgver%.r*}"
   wlroots0.20
