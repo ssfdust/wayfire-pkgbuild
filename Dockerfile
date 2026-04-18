@@ -12,6 +12,7 @@ RUN gpgconf --kill all \
         cmake \
         doctest \
         extra-cmake-modules \
+        fmt \
         git \
         glib2-devel \
         glibmm \
@@ -20,6 +21,7 @@ RUN gpgconf --kill all \
         gobject-introspection \
         gtk-layer-shell \
         gtkmm3 \
+        gtkmm-4.0 \
         iio-sensor-proxy \
         libdbusmenu-gtk3 \
         libdisplay-info \
@@ -28,7 +30,9 @@ RUN gpgconf --kill all \
         libjpeg \
         libliftoff \
         libpulse \
+        libpipewire \
         librsvg \
+        libwireplumber \
         libxcb \
         libxkbcommon \
         meson \
@@ -40,6 +44,7 @@ RUN gpgconf --kill all \
         seatd \
         sudo \
         systemd-libs \
+        vala \
         vulkan-headers \
         vulkan-icd-loader \
         wayland-protocols \
@@ -47,6 +52,7 @@ RUN gpgconf --kill all \
         xcb-util-renderutil \
         xcb-util-wm \
         xorg-xwayland \
+        yyjson \
     && useradd pkgbuilder -g wheel -u 1000 -m \
     && chown -R pkgbuilder:wheel /home/pkgbuilder \
     && mkdir -p /home/pkgbuilder/wayfire/packages \

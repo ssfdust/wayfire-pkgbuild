@@ -1,6 +1,6 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 pkgname=wf-shell-git
-pkgver=0.10.0.r20250113.aaadead
+pkgver=0.11.0.r20260402.f926b19
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc='GTK3-based panel for the Wayfire compositor'
@@ -10,8 +10,37 @@ license=('MIT')
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
 options=()
-depends=(wf-config gtkmm3 gtk-layer-shell libdbusmenu-gtk3 libpulse)
-makedepends=(wayland wayland-protocols meson ninja git gobject-introspection glib2-devel vulkan-headers)
+depends=(
+  alsa-lib
+  atkmm
+  cairo
+  cairomm
+  glib2
+  glibc
+  glibmm
+  gtk-layer-shell
+  gtk4
+  gtkmm-4.0
+  hicolor-icon-theme
+  libdbusmenu-gtk3
+  libwireplumber
+  libpipewire
+  libpulse
+  libgcc
+  libsigc++
+  libstdc++
+  pangomm
+  "wayfire>=${_pkgver}"
+  wayland
+  "wf-config>=${_pkgver}"
+)
+makedepends=(
+  git
+  glib2-devel
+  glm
+  meson
+  wayland-protocols
+)
 source=("${pkgname}::git+https://github.com/WayfireWM/wf-shell")
 sha512sums=('SKIP')
 
@@ -20,7 +49,6 @@ _builddir_pkgver="build-pkgver"
 
 _meson_setup () {
     arch-meson \
-        -Dpulse=enabled \
         "${srcdir}/${pkgname}/" "$1"
 }
 

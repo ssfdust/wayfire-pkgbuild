@@ -3,8 +3,9 @@
 # Contributor: Maxim Baz <$pkgname at maximbaz dot com>
 # Contributor: Omar Pakker
 pkgname=wlroots-lily-git
-pkgver=0.19.0.r20250720.025643
-_pkgver=${pkgver%%.r*}
+pkgver=0.20.0.r20260409.024321
+_suffixver=${pkgver%%.r*}
+_suffixver=${_suffixver%.*}
 pkgrel=1
 license=('MIT')
 pkgdesc='Modular Wayland compositor library (git version, with patches)'
@@ -12,10 +13,10 @@ url='https://gitlab.freedesktop.org/lilydjwg/wlroots'
 arch=('x86_64')
 depends=(
     'libdisplay-info.so'
-    'libliftoff.so'
-    'liblcms2.so'
     'libglvnd'
     'libinput'
+    'liblcms2.so'
+    'libliftoff.so'
     'libpixman-1.so'
     'libseat.so'
     'libudev.so'
@@ -28,7 +29,7 @@ depends=(
     'xcb-util-errors'
     'xcb-util-renderutil'
     'xcb-util-wm'
-    'xorg-xwayland')
+)
 makedepends=(
     'git'
     'glslang'
@@ -40,14 +41,16 @@ makedepends=(
     'xorg-xwayland'
 )
 optdepends=(
-    'xorg-xwayland-lily: HiDPI support, see https://gitlab.freedesktop.org/xorg/xserver/-/merge_requests/733'
+    'xorg-xwayland: Xwayland support'
+    'xorg-xwayland-lily: HiDPI Xwayland support, see https://gitlab.freedesktop.org/xorg/xserver/-/merge_requests/733'
 )
 provides=(
-    'libwlroots.so'
-    "wlroots${_pkgver%.*}"
-    "wlroots=${pkgver%%.r*}"
+    "libwlroots-$_suffixver.so"
+    "wlroots$_suffixver=$pkgver"
 )
-conflicts=(wlroots wlroots-git "wlroots${_pkgver%.*}")
+conflicts=(
+    "wlroots$_suffixver"
+)
 options=(
     'debug'
 )

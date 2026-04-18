@@ -1,14 +1,43 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com0
 pkgname=wayfire-git
-pkgver=0.10.0.r20250815.9ab04b00
+pkgver=0.11.0.r20260417.9a568ffd
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor"
 arch=('x86_64')
 url="https://github.com/ammen99/wayfire"
 license=('MIT')
-depends=('wlroots' 'cairo' 'yyjson' 'glm' 'libjpeg' 'wf-config-git' 'seatd' 'pango')
-makedepends=('git' 'meson' 'ninja' 'wayland-protocols' 'doctest' 'cmake' 'nlohmann-json' 'vulkan-headers')
+depends=(
+  cairo
+  glib2
+  glibc
+  libevdev
+  libgcc
+  libglvnd
+  libgomp
+  libinput
+  libjpeg
+  libpng
+  libstdc++
+  libxcb
+  libxkbcommon
+  pango
+  pixman
+  systemd-libs
+  vulkan-icd-loader
+  wayland
+  "wf-config>=${pkgver%.r*}"
+  wlroots0.20
+  yyjson
+)
+makedepends=(
+  doctest
+  git
+  glm
+  meson
+  vulkan-headers
+  wayland-protocols
+)
 optdepends=('wf-shell-git: GTK3-based panel for the Wayfire compositor'
             'wf-sound-control-git: Small utility for the Wayfire compositor to control sound volume')
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")

@@ -1,6 +1,6 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 pkgname=wcm-git
-pkgver=0.9.0.r20250522.b5b5aef
+pkgver=0.11.0.r20251123.d7e3d67
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc='Wayfire Config Manager'
@@ -9,10 +9,33 @@ arch=(x86_64)
 license=(MIT)
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
-depends=(gtkmm3 wayfire-git wf-shell-git)
+depends=(
+  atkmm
+  glib2
+  glibc
+  glibmm
+  gtk3
+  gtkmm3
+  libevdev
+  libgcc
+  libsigc++
+  libstdc++
+  libxkbcommon
+  libxml2
+  wayland
+  fmt
+  "wf-config>=${_pkgver}"
+)
+makedepends=(
+  git
+  glm
+  meson
+  "wayfire>=${_pkgver}"
+  wayland-protocols
+  "wf-shell>=${_pkgver}"
+)
 options=(debug)
-makedepends=(wayland-protocols meson ninja git extra-cmake-modules vulkan-headers)
-optdepends=("wayfire-plugins-extra: configuration for extra Wayfire plugins")
+optdepends=('wdisplays: Display configuration tool')
 source=("${pkgname}::git+https://github.com/WayfireWM/wcm")
 sha512sums=('SKIP')
 
