@@ -27,7 +27,7 @@ RUN gpgconf --kill all \
         libdisplay-info \
         libglvnd \
         libinput \
-        libjpeg \
+        libjpeg-turbo \
         libliftoff \
         libpulse \
         libpipewire \

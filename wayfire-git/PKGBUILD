@@ -16,7 +16,7 @@ depends=(
   libglvnd
   libgomp
   libinput
-  libjpeg
+  libjpeg-turbo
   libpng
   libstdc++
   libxcb
