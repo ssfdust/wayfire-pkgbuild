@@ -1,6 +1,6 @@
 # Maintainer: Librewish <librewish@gmail.com>
 pkgname=wayfire-plugins-extra-git
-pkgver=0.11.0.r20260412.8d73a10
+pkgver=0.11.0.r20260713.972d648
 _pkgver=${pkgver%%.r*}
 pkgrel=1
 pkgdesc="3D wayland compositor extra plugins"
@@ -14,7 +14,8 @@ provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
 replaces=()
 options=(debug)
-source=("${pkgname}::git+https://github.com/WayfireWM/wayfire-plugins-extra")
+#source=("${pkgname}::git+https://github.com/WayfireWM/wayfire-plugins-extra")
+source=("${pkgname}::git+https://github.com/ssfdust/wayfire-plugins-extra#branch=archlinux")
 sha256sums=('SKIP')
 install=wayfire-plugins-extra.install
 
