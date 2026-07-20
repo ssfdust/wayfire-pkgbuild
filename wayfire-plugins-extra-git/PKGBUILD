@@ -7,8 +7,8 @@ pkgdesc="3D wayland compositor extra plugins"
 arch=('x86_64')
 url="https://github.com/WayfireWM/wayfire-plugins-extra"
 license=('MIT')
-depends=('wayfire-git' 'glibmm' 'iio-sensor-proxy' 'pango' 'boost-libs' 'glm')
-makedepends=('git' 'meson' 'ninja' 'boost' 'vulkan-headers')
+depends=('wayfire-git' 'glibmm' 'iio-sensor-proxy' 'pango' 'boost-libs')
+makedepends=('git' 'meson' 'ninja' 'boost' 'vulkan-headers' 'cmake')
 optdepends=('wcm: GTK3-based configuration tool for the Wayfire compositor')
 provides=("${pkgname%-git}=${_pkgver}" "${pkgname}")
 conflicts=("${pkgname%-git}" "${pkgname}")
